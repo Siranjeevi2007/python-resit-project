@@ -1,3 +1,5 @@
+print("Guess the number!")
+
 import random
 
 print("Welcome to the Guessing Game!")
