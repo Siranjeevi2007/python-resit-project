@@ -76,6 +76,14 @@ int main()
             spawnObstacles(obstacles, spawnTimer, dt);
             updateObstacles(obstacles, dt, score);
             handleCollisions(player, obstacles, lives);
+        } else if (IsKeyPressed(KEY_ENTER)) {
+            // Restart: back to the initial state
+            player = {PLAYER_X, PLAYER_GROUND_Y};
+            velocityY = 0.0f;
+            obstacles.clear();
+            spawnTimer = 0.0f;
+            score = 0;
+            lives = MAX_LIVES;
         }
 
         // --- Draw ---

@@ -35,6 +35,6 @@ void displayGameOver(int score)
     const char* scoreText = TextFormat("Final score: %d", score);
     DrawText(scoreText, (SCREEN_WIDTH - MeasureText(scoreText, 40)) / 2, 290, 40, RAYWHITE);
 
-    const char* hint = "Press ESC to quit";
+    const char* hint = "Press ENTER to play again or ESC to quit";
     DrawText(hint, (SCREEN_WIDTH - MeasureText(hint, 20)) / 2, 360, 20, LIGHTGRAY);
 }
