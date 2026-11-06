@@ -34,10 +34,12 @@ const float OBSTACLE_GROUND_Y = GROUND_Y - OBSTACLE_HEIGHT;
 
 const int MAX_LIVES = 3;
 
-// Draws the ground, the player, the obstacles, the score and the lives.
+class GameObject;
+
+// Draws the ground, every object of the world, the score and the lives.
+// Each object draws itself (GameObject::draw), whatever its real type is.
 // Must be called between BeginDrawing() and EndDrawing().
-void displayState(const Position& player, const std::vector<Position>& obstacles,
-                  int score, int lives);
+void displayState(const std::vector<const GameObject*>& objects, int score, int lives);
 
 // Draws the GAME OVER screen on top of the last frame.
 void displayGameOver(int score);

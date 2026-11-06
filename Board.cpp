@@ -2,19 +2,16 @@
 
 #include "raylib.h"
 
-void displayState(const Position& player, const std::vector<Position>& obstacles,
-                  int score, int lives)
+#include "GameObject.h"
+
+void displayState(const std::vector<const GameObject*>& objects, int score, int lives)
 {
     // Ground
     DrawRectangle(0, (int)GROUND_Y, SCREEN_WIDTH, SCREEN_HEIGHT - (int)GROUND_Y, DARKGRAY);
 
-    // Player
-    DrawRectangle((int)player.x, (int)player.y, (int)PLAYER_WIDTH, (int)PLAYER_HEIGHT, RED);
-
-    // Obstacles
-    for (const Position& obstacle : obstacles) {
-        DrawRectangle((int)obstacle.x, (int)obstacle.y,
-                      (int)OBSTACLE_WIDTH, (int)OBSTACLE_HEIGHT, GRAY);
+    // Player and obstacles: the virtual draw() picks the right drawing for each one
+    for (const GameObject* object : objects) {
+        object->draw();
     }
 
     // Score (top left) and lives (top right)

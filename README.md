@@ -1,7 +1,7 @@
-# Runner — Session 4 (Raylib graphics)
+# Runner
 
 A red player on the ground jumps over grey obstacles scrolling from the right.
-1024×576 window, 60 fps, 3 lives, GAME OVER after 3 collisions.
+1024x576 window, 60 fps, 3 lives, GAME OVER after 3 collisions.
 
 ![Runner](screenshot.png)
 
@@ -52,11 +52,22 @@ Then run the game:
 
 ## Structure
 
-The Board / Player / main split from session 3 stays in place: Board renders, Player holds the game logic.
+Since session 5, the player and the obstacles are objects. Both inherit from `GameObject`, a rectangle
+that can `update` and `draw` itself, so `Board` draws the whole world through the base class.
 
-| File                      | Role                                                                                                     | Lab steps      |
-|---------------------------|----------------------------------------------------------------------------------------------------------|----------------|
-| `CMakeLists.txt`          | FetchContent block for Raylib 5.5, `runner` target linked to `raylib`                                    | A2, A3         |
-| `Board.h` / `Board.cpp`   | Window constants, `Position` in floats, pixel constants, `displayState` / `displayGameOver` (rendering)  | B1, C1–C4      |
-| `Player.h` / `Player.cpp` | `handleInput` (`IsKeyPressed(KEY_SPACE)`), `updateJump` (gravity + landing), `checkCollision`            | D1, D2, D5     |
-| `main.cpp`                | Raylib loop, obstacle scrolling (px/s), spawning every 1.5 s, collisions, score, lives, restart          | B2, C5, D3, D4 |
+```
+          GameObject
+     (position, size, update,
+      draw, collidesWith)
+         /          \
+     Player        Obstacle
+```
+
+| File                              | Role                                                                                   |
+|-----------------------------------|----------------------------------------------------------------------------------------|
+| `CMakeLists.txt`                  | FetchContent block for Raylib 5.5, `runner` target linked to `raylib`                  |
+| `Board.h` / `Board.cpp`           | Window and pixel constants, `Position`, `displayState` (ground, objects, score, lives), `displayGameOver` |
+| `GameObject.h` / `GameObject.cpp` | Base class: position, size, virtual `update` / `draw`, `collidesWith` (rectangle overlap) |
+| `Player.h` / `Player.cpp`         | `Player` class: `handleInput` (`IsKeyPressed(KEY_SPACE)`), `update` (gravity + landing), `draw`, `reset` |
+| `Obstacle.h` / `Obstacle.cpp`     | `Obstacle` class: scrolls left at 300 px/s, `draw`, `isOffScreen`                      |
+| `main.cpp`                        | Raylib loop, spawning every 1.5 s, collisions, score, lives, restart                    |

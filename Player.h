@@ -1,20 +1,32 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Board.h"
+#include "GameObject.h"
 
 // Jump physics, in pixels per second (and pixels per second squared).
 const float JUMP_SPEED = 650.0f;  // initial upward speed when Space is pressed
 const float GRAVITY = 1800.0f;    // pulls the player back to the ground
 
-// Reads the keyboard. Space starts a jump, only if the player is on the ground.
-void handleInput(const Position& player, float& velocityY);
+// The red square controlled with the keyboard.
+class Player : public GameObject {
+public:
+    Player();
 
-// Moves the player along its jump and lands it back on the ground.
-// dt is the duration of the frame in seconds (GetFrameTime()).
-void updateJump(Position& player, float& velocityY, float dt);
+    // Reads the keyboard. Space starts a jump, only if the player is on the ground.
+    void handleInput();
 
-// True if the player rectangle overlaps the obstacle rectangle.
-bool checkCollision(const Position& player, const Position& obstacle);
+    // Moves the player along its jump and lands it back on the ground.
+    void update(float dt) override;
+
+    void draw() const override;
+
+    // Puts the player back on the ground, at its start position.
+    void reset();
+
+private:
+    bool isOnGround() const;
+
+    float velocityY;  // pixels per second, negative = upwards
+};
 
 #endif
