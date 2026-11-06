@@ -22,7 +22,9 @@ FetchContent_MakeAvailable(raylib)
 add_executable(runner
     main.cpp
     Board.cpp
+    GameObject.cpp
     Player.cpp
+    Obstacle.cpp
 )
 
 target_link_libraries(runner PRIVATE raylib)
